@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { dealStore, submissionStore, peopleStore, ibanStore } from '../store';
+import {onMounted, ref} from 'vue';
+import {useI18n} from 'vue-i18n';
+import {dealStore, ibanStore, peopleStore, submissionStore} from '../store';
+import {FwbCard} from 'flowbite-vue';
 
 const { t } = useI18n();
 
@@ -26,21 +27,21 @@ onMounted(async () => {
 <template>
   <h1 class="text-2xl font-bold mb-6">{{ t('nav.dashboard') }}</h1>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center">
+    <fwb-card class="text-center">
       <div class="text-3xl font-bold">{{ counts.deals }}</div>
       <div class="text-sm text-gray-500">{{ t('nav.deals') }}</div>
-    </div>
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center">
+    </fwb-card>
+    <fwb-card class="text-center">
       <div class="text-3xl font-bold">{{ counts.submissions }}</div>
       <div class="text-sm text-gray-500">{{ t('nav.submissions') }}</div>
-    </div>
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center">
+    </fwb-card>
+    <fwb-card class="text-center">
       <div class="text-3xl font-bold">{{ counts.people }}</div>
       <div class="text-sm text-gray-500">{{ t('nav.people') }}</div>
-    </div>
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center">
+    </fwb-card>
+    <fwb-card class="text-center">
       <div class="text-3xl font-bold">{{ counts.ibans }}</div>
       <div class="text-sm text-gray-500">{{ t('nav.ibans') }}</div>
-    </div>
+    </fwb-card>
   </div>
 </template>

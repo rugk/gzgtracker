@@ -1,8 +1,9 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import { router } from './router';
-import { i18n } from './i18n';
+import {createApp} from 'vue';
+import {createPinia} from 'pinia';
+import {router} from './router';
+import {i18n} from './i18n';
 import App from './App.vue';
+import 'flowbite-vue/index.css';
 import './styles.css';
 
 const app = createApp(App);

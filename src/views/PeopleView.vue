@@ -82,14 +82,13 @@ async function deletePerson(id: string) {
       <fwb-table-row v-for="person in people" :key="person.id">
         <fwb-table-cell>{{ person.name }}</fwb-table-cell>
         <fwb-table-cell>{{ person.email }}</fwb-table-cell>
-        <fwb-table-cell class="text-right">
-          <button @click="openEditModal(person)"
-                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-3">
+        <fwb-table-cell class="flex justify-end gap-2">
+          <fwb-button @click="openEditModal(person)" color="blue" size="sm" outline>
             {{ t('common.edit') }}
-          </button>
-          <button @click="deletePerson(person.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+          </fwb-button>
+          <fwb-button @click="deletePerson(person.id)" color="red" size="sm" outline>
             {{ t('common.delete') }}
-          </button>
+          </fwb-button>
         </fwb-table-cell>
       </fwb-table-row>
       <fwb-table-row v-if="people.length === 0">

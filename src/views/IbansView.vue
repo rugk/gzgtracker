@@ -104,14 +104,13 @@ async function deleteIban(id: string) {
         <fwb-table-cell>{{ iban.label }}</fwb-table-cell>
         <fwb-table-cell class="font-mono text-sm">{{ iban.iban }}</fwb-table-cell>
         <fwb-table-cell>{{ getPersonName(iban.personId) }}</fwb-table-cell>
-        <fwb-table-cell class="text-right">
-          <button @click="openEditModal(iban)"
-                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-3">
+        <fwb-table-cell class="flex justify-end gap-2">
+          <fwb-button @click="openEditModal(iban)" color="blue" size="sm" outline>
             {{ t('common.edit') }}
-          </button>
-          <button @click="deleteIban(iban.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+          </fwb-button>
+          <fwb-button @click="deleteIban(iban.id)" color="red" size="sm" outline>
             {{ t('common.delete') }}
-          </button>
+          </fwb-button>
         </fwb-table-cell>
       </fwb-table-row>
       <fwb-table-row v-if="ibans.length === 0">

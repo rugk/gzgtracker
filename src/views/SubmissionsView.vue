@@ -169,13 +169,13 @@ async function deleteSubmission(id: string) {
           <fwb-badge :color="getStatusColor(sub.status)">{{ sub.status }}</fwb-badge>
         </fwb-table-cell>
         <fwb-table-cell>{{ sub.submittedAt }}</fwb-table-cell>
-        <fwb-table-cell class="text-right">
-          <button @click="openEditModal(sub)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-3">
+        <fwb-table-cell class="flex justify-end gap-2">
+          <fwb-button @click="openEditModal(sub)" color="blue" size="sm" outline>
             {{ t('common.edit') }}
-          </button>
-          <button @click="deleteSubmission(sub.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+          </fwb-button>
+          <fwb-button @click="deleteSubmission(sub.id)" color="red" size="sm" outline>
             {{ t('common.delete') }}
-          </button>
+          </fwb-button>
         </fwb-table-cell>
       </fwb-table-row>
       <fwb-table-row v-if="submissions.length === 0">
