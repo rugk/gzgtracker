@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
 import {useI18n} from 'vue-i18n';
-import {peopleStore} from '../store';
-import type {Person} from '../models';
+import {peopleStore} from '@/store';
+import type {Person} from '@/models';
 import {
   FwbButton,
   FwbInput,
