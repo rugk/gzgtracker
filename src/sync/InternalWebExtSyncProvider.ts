@@ -12,6 +12,7 @@ export class InternalWebExtSyncProvider implements SyncProvider {
 
     private get browser() {
         const g = globalThis as any;
+        // In WXT browser is often available directly or via g.browser
         if (typeof g.browser !== 'undefined' && g.browser.storage) return g.browser;
         if (typeof g.chrome !== 'undefined' && g.chrome.storage) return g.chrome;
         return undefined;
@@ -40,7 +41,7 @@ export class InternalWebExtSyncProvider implements SyncProvider {
         }
 
         console.log(`[InternalWebExtSync] Pulling store "${storeName}"…`);
-        const result = await b.storage.sync.get(storeName);
+        const result = await browser.storage.sync.get(storeName);
         const raw = result[storeName];
         if (!raw) return [];
 

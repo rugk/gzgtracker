@@ -36,7 +36,7 @@ function openFullTab() {
   const g = globalThis as any;
   const b = g.browser || g.chrome;
   if (b && b.tabs) {
-    b.tabs.create({url: b.runtime.getURL('entrypoints/popup/index.html')});
+    b.tabs.create({url: b.runtime.getURL('dashboard.html')});
   }
 }
 </script>

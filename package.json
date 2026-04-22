@@ -8,7 +8,15 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build-wxt": "wxt build",
+    "wxt:zip": "wxt zip",
+    "wxt:zip:firefox": "wxt zip -b firefox",
+    "postinstall": "wxt prepare extension",
+    "wxt:dev": "wxt extension",
+    "wxt:dev:firefox": "wxt -b firefox extension",
+    "wxt:build": "wxt build extension",
+    "wxt:build:firefox": "wxt build extension -b firefox"
   },
   "dependencies": {
     "@picocss/pico": "^2.1.1",
@@ -19,7 +27,8 @@
     "pouchdb-browser": "^9.0.0",
     "vue": "^3.5.0",
     "vue-i18n": "^11.1.0",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "comctx": "^1.6.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.0",
@@ -27,6 +36,8 @@
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^3.1.0",
-    "vue-tsc": "^2.2.0"
+    "vue-tsc": "^2.2.0",
+    "@wxt-dev/module-vue": "^1.0.3",
+    "wxt": "^0.20.25"
   }
 }

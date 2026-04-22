@@ -23,7 +23,7 @@ Cashback deal tracker for managing "Geld-zurück" (money-back) submissions.
 - Node.js ≥ 20
 - npm ≥ 10
 
-### Install & Run
+### Install & Run (Standalone Web App)
 
 ```bash
 npm install          # install dependencies
@@ -31,8 +31,20 @@ npm run dev          # start dev server
 npm run build        # type-check + production build
 npm run preview      # preview production build
 npm test             # run tests
-npm run test:watch   # run tests in watch mode
 ```
+
+### Browser Extension (WXT)
+
+The extension is located in the `extension/` directory but managed from the root.
+
+```bash
+npm run wxt:dev           # Start WXT dev mode
+npm run wxt:dev:firefox    # Start WXT dev mode for Firefox
+npm run wxt:build:firefox # Build for Firefox (extension/.output/firefox-mv2)
+```
+
+The extension hosts the full application in both its popup and as a standalone tab (Dashboard). When running inside the
+extension, it uses a direct `browser.storage.sync` provider.
 
 ## Project Structure
 
