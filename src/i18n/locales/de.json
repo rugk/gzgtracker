@@ -1,0 +1,151 @@
+{
+  "app": {
+    "name": "GzGTracker",
+    "tagline": "Verwalte deine Geld-zurück-Aktionen"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "deals": "Aktionen",
+    "submissions": "Einreichungen",
+    "people": "Personen",
+    "ibans": "Bankkonten",
+    "settings": "Einstellungen"
+  },
+  "common": {
+    "add": "Hinzufügen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "clone": "Klonen",
+    "close": "Schließen",
+    "confirm": "Bestätigen",
+    "yes": "Ja",
+    "no": "Nein",
+    "loading": "Lädt...",
+    "noData": "Keine Daten verfügbar",
+    "actions": "Aktionen"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "activeDeals": "Aktive Aktionen",
+    "recentSubmissions": "Kürzliche Einreichungen",
+    "pendingPayments": "Ausstehende Zahlungen",
+    "statistics": "Statistiken",
+    "totalDeals": "Aktionen Gesamt",
+    "totalSubmissions": "Einreichungen Gesamt",
+    "totalReceived": "Erhalten Gesamt",
+    "pendingAmount": "Ausstehender Betrag"
+  },
+  "people": {
+    "title": "Personen",
+    "add": "Person hinzufügen",
+    "edit": "Person bearbeiten",
+    "name": "Name",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "address": "Adresse",
+    "contacts": "Kontaktvarianten",
+    "addContact": "Kontaktvariante hinzufügen",
+    "contactType": "Kontakttyp",
+    "contactValue": "Wert",
+    "deleteConfirm": "Möchten Sie diese Person wirklich löschen?"
+  },
+  "ibans": {
+    "title": "Bankkonten",
+    "add": "IBAN hinzufügen",
+    "edit": "IBAN bearbeiten",
+    "iban": "IBAN",
+    "bankName": "Bankname",
+    "owners": "Besitzer",
+    "selectOwners": "Besitzer auswählen",
+    "sharedAccount": "Gemeinsames Konto",
+    "deleteConfirm": "Möchten Sie diese IBAN wirklich löschen?"
+  },
+  "deals": {
+    "title": "Aktionen",
+    "add": "Aktion hinzufügen",
+    "edit": "Aktion bearbeiten",
+    "company": "Unternehmen",
+    "product": "Produkt",
+    "cashbackAmount": "Cashback-Betrag",
+    "cashbackType": "Cashback-Art",
+    "cashbackTypes": {
+      "full": "Volle Rückerstattung",
+      "partial": "Teilrückerstattung",
+      "fixed": "Fester Betrag"
+    },
+    "startDate": "Startdatum",
+    "endDate": "Enddatum",
+    "status": "Status",
+    "statuses": {
+      "active": "Aktiv",
+      "expired": "Abgelaufen",
+      "renewed": "Erneuert"
+    },
+    "conditions": "Bedingungen",
+    "participationLimits": "Teilnahmebegrenzungen",
+    "notes": "Notizen",
+    "source": "Quelle",
+    "sources": {
+      "manual": "Manueller Eintrag",
+      "community": "Community-Liste",
+      "platform": "Plattform"
+    },
+    "platform": "Plattform",
+    "deleteConfirm": "Möchten Sie diese Aktion wirklich löschen?",
+    "cloneSuccess": "Aktion erfolgreich geklont"
+  },
+  "submissions": {
+    "title": "Einreichungen",
+    "add": "Einreichung hinzufügen",
+    "edit": "Einreichung bearbeiten",
+    "deal": "Aktion",
+    "person": "Person",
+    "iban": "IBAN",
+    "contactUsed": "Verwendeter Kontakt",
+    "submissionDate": "Einreichungsdatum",
+    "purchaseDate": "Kaufdatum",
+    "purchaseAmount": "Kaufbetrag",
+    "receiptReference": "Kassenzettel-Referenz",
+    "status": "Status",
+    "statuses": {
+      "submitted": "Eingereicht",
+      "approved": "Genehmigt",
+      "paid": "Bezahlt",
+      "rejected": "Abgelehnt"
+    },
+    "paymentReceivedDate": "Zahlungseingang",
+    "deleteConfirm": "Möchten Sie diese Einreichung wirklich löschen?"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "theme": "Design",
+    "themes": {
+      "light": "Hell",
+      "dark": "Dunkel",
+      "auto": "Automatisch"
+    },
+    "dataManagement": "Datenverwaltung",
+    "exportData": "Daten exportieren",
+    "importData": "Daten importieren",
+    "clearData": "Alle Daten löschen",
+    "clearDataConfirm": "Möchten Sie wirklich alle Daten löschen? Dies kann nicht rückgängig gemacht werden!",
+    "exportSuccess": "Daten erfolgreich exportiert",
+    "importSuccess": "Daten erfolgreich importiert",
+    "importError": "Fehler beim Importieren der Daten"
+  },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "invalidEmail": "Ungültige E-Mail-Adresse",
+    "invalidIban": "Ungültiges IBAN-Format",
+    "invalidDate": "Ungültiges Datum",
+    "minLength": "Mindestlänge ist {min} Zeichen",
+    "maxLength": "Maximale Länge ist {max} Zeichen"
+  }
+}
