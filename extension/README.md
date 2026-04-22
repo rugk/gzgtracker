@@ -7,7 +7,7 @@ with [WXT](https://wxt.dev/) and Vue 3.
 
 The extension serves two primary purposes:
 
-1. **Direct Storage:** Providing a unified `browser.storage.sync` backend for the application when running inside the
+1. **Direct Storage:** Providing a unified `wxt/storage` backend for the application when running inside the
    extension context (Popup or Full Tab).
 2. **Bridge Sync:** Acting as a storage provider for the standalone website (e.g., running on localhost) by bridging
    calls from the page to the extension's background storage.
@@ -18,7 +18,7 @@ The extension serves two primary purposes:
 
 - **Background Script (`entrypoints/background.ts`):**
     - Hosts the `SyncStorageService` using [comctx](https://www.npmjs.com/package/comctx).
-    - Directly interacts with `browser.storage.sync`.
+  - Directly interacts with `wxt/storage` (sync area).
 - **Content Script (`entrypoints/content.ts`):**
     - Injected into specified origins (configured in `wxt.config.ts`).
     - Listens for `gzg-sync-request` CustomEvents from the web page.
@@ -37,7 +37,7 @@ The extension serves two primary purposes:
 graph LR
     WebApp["Web App\n(WebExtSyncProvider)"] <-->|" CustomEvent\n(gzg-sync-*) "| ContentScript["Content Script\n(Bridge)"]
     ContentScript <-->|" Runtime Messaging\n(comctx) "| Background["Background\n(Storage Provider)"]
-    Background <-->|" WebExt API "| Storage["browser.storage.sync"]
+  Background <-->|" WebExt API "| Storage["wxt/storage (sync)"]
 ```
 
 ## Development

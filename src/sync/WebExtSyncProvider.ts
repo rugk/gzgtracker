@@ -7,7 +7,7 @@ import type {ConfigField, SyncableRecord, SyncProvider} from './SyncProvider';
  * The extension's content script listens for 'gzg-sync-request' CustomEvents
  * on the page's window and dispatches 'gzg-sync-response' events back.
  * The content script forwards calls to the background service worker which
- * accesses browser.storage.sync via comctx.
+ * accesses wxt/storage (sync area) via comctx.
  *
  * Message protocol (request → response):
  *   { id, action: 'ping' }                          → { id, ok: true }
@@ -15,7 +15,7 @@ import type {ConfigField, SyncableRecord, SyncProvider} from './SyncProvider';
  *   { id, action: 'push', storeName, items }         → { id, ok: true }
  */
 export class WebExtSyncProvider implements SyncProvider {
-    readonly name = 'Browser Extension (browser.storage.sync)';
+    readonly name = 'Browser Extension (wxt/storage sync)';
     readonly key = 'webext';
 
     readonly configFields: Record<string, ConfigField> = {};

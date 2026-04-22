@@ -44,7 +44,7 @@ npm run wxt:build:firefox # Build for Firefox (extension/.output/firefox-mv2)
 ```
 
 The extension hosts the full application in both its popup and as a standalone tab (Dashboard). When running inside the
-extension, it uses a direct `browser.storage.sync` provider.
+extension, it uses a direct `wxt/storage` (sync) provider.
 
 ## Project Structure
 

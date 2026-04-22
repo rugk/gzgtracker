@@ -122,11 +122,11 @@ PouchDB is loaded lazily so it doesn't affect initial page load or cause
 
 ### WebExtension / Direct Storage (`InternalWebExtSyncProvider.ts`)
 
-When the application is running **inside** a browser extension (e.g. as a popup), it can access `browser.storage.sync`
+When the application is running **inside** a browser extension (e.g. as a popup), it can access `wxt/storage`
 directly. This is the preferred method as it avoids the messaging overhead and works seamlessly within the extension.
 
 The extension popup also provides an **"Open in Tab"** button that opens the full application in a normal browser tab
-while still maintaining direct access to `browser.storage.sync`.
+while still maintaining direct access to `wxt/storage`.
 
 **Config fields:** None.
 
@@ -145,7 +145,7 @@ graph LR
 
 - The **background script** provides a `SyncStorageService` via
   [comctx](https://www.npmjs.com/package/comctx) that wraps
-  `browser.storage.sync` (get/set per store name).
+  `wxt/storage` sync area (get/set per store name).
 - The **content script** injects into GzGTracker pages, creates a comctx proxy
   to the background service, and bridges calls from the page via `CustomEvent`
   (`gzg-sync-request` / `gzg-sync-response`).

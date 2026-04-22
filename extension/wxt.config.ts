@@ -14,7 +14,7 @@ export default defineConfig({
     manifest: {
         name: 'GzG Tracker',
         description:
-            'GzG Tracker Extension – syncs data via browser.storage.sync.',
+            'GzG Tracker Extension – syncs data via wxt/storage (sync).',
         // Firefox add-on ID for stable identification
         browser_specific_settings: {
             gecko: {
