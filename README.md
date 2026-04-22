@@ -10,7 +10,7 @@ Cashback deal tracker for managing "Geld-zurück" (money-back) submissions.
 | Routing    | Vue Router (hash-based)                   |
 | State      | Pinia                                     |
 | i18n       | Vue I18n                                  |
-| Styling    | Pico CSS (classless/semantic)             |
+| Styling    | Pico CSS (semantic-first)                 |
 | Storage    | LocalForage (offline-first)               |
 | Build      | Vite 7                                    |
 | Tests      | Vitest + Happy-DOM                        |
