@@ -65,3 +65,9 @@ src/
     ├── IbansView.vue
     └── SettingsView.vue
 ```
+
+## Testing
+
+```
+npm run test
+``` 
