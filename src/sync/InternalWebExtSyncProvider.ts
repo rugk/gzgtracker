@@ -1,4 +1,5 @@
 import type {ConfigField, SyncableRecord, SyncProvider} from './SyncProvider';
+import {browser} from "wxt/browser";
 
 /**
  * Sync provider that uses browser.storage.sync directly.

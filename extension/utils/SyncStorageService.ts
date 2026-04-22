@@ -1,4 +1,5 @@
 import {defineProxy} from 'comctx';
+import {browser} from "wxt/browser";
 
 /**
  * Service that wraps browser.storage.sync for cross-device data sync.
