@@ -266,7 +266,6 @@ function getIbanString(ibanId) {
 </template>
 
 <style scoped>
-@import '../assets/common-styles.css';
 .submissions-table-container {
   overflow-x: auto;
   background-color: var(--bg-primary);

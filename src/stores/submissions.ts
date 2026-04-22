@@ -2,9 +2,10 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { storage, STORAGE_KEYS } from '@/utils/storage'
 import { parseISO, isAfter } from 'date-fns'
+import type { Submission, SubmissionForm } from '@/types'
 
 export const useSubmissionsStore = defineStore('submissions', () => {
-  const submissions = ref([])
+  const submissions = ref<Submission[]>([])
   const loading = ref(false)
 
   // Load submissions from storage
@@ -23,8 +24,8 @@ export const useSubmissionsStore = defineStore('submissions', () => {
   }
 
   // Add submission
-  function addSubmission(submission) {
-    const newSubmission = {
+  function addSubmission(submission: SubmissionForm) {
+    const newSubmission: Submission = {
       id: Date.now().toString(),
       dealId: submission.dealId,
       personId: submission.personId,
@@ -45,14 +46,14 @@ export const useSubmissionsStore = defineStore('submissions', () => {
   }
 
   // Update submission
-  function updateSubmission(id, updates) {
+  function updateSubmission(id: string, updates: Partial<Submission>) {
     const index = submissions.value.findIndex(s => s.id === id)
     if (index !== -1) {
       submissions.value[index] = {
         ...submissions.value[index],
         ...updates,
         updatedAt: new Date().toISOString()
-      }
+      } as Submission
       saveSubmissions()
       return submissions.value[index]
     }
@@ -60,7 +61,7 @@ export const useSubmissionsStore = defineStore('submissions', () => {
   }
 
   // Delete submission
-  function deleteSubmission(id) {
+  function deleteSubmission(id: string) {
     const index = submissions.value.findIndex(s => s.id === id)
     if (index !== -1) {
       submissions.value.splice(index, 1)
@@ -72,22 +73,22 @@ export const useSubmissionsStore = defineStore('submissions', () => {
 
   // Get submission by id
   const getSubmissionById = computed(() => {
-    return (id) => submissions.value.find(s => s.id === id)
+    return (id: string) => submissions.value.find(s => s.id === id)
   })
 
   // Get submissions by deal
   const getSubmissionsByDeal = computed(() => {
-    return (dealId) => submissions.value.filter(s => s.dealId === dealId)
+    return (dealId: string) => submissions.value.filter(s => s.dealId === dealId)
   })
 
   // Get submissions by person
   const getSubmissionsByPerson = computed(() => {
-    return (personId) => submissions.value.filter(s => s.personId === personId)
+    return (personId: string) => submissions.value.filter(s => s.personId === personId)
   })
 
   // Get submissions by IBAN
   const getSubmissionsByIban = computed(() => {
-    return (ibanId) => submissions.value.filter(s => s.ibanId === ibanId)
+    return (ibanId: string) => submissions.value.filter(s => s.ibanId === ibanId)
   })
 
   // Get pending payments
@@ -119,7 +120,7 @@ export const useSubmissionsStore = defineStore('submissions', () => {
 
   // Check if deal/person/IBAN combination exists
   const hasSubmission = computed(() => {
-    return (dealId, personId, ibanId) => {
+    return (dealId: string, personId: string, ibanId: string) => {
       return submissions.value.some(s =>
         s.dealId === dealId &&
         s.personId === personId &&
@@ -131,14 +132,14 @@ export const useSubmissionsStore = defineStore('submissions', () => {
   // Calculate total received amount
   const totalReceived = computed(() => {
     return paidSubmissions.value.reduce((sum, s) => {
-      return sum + (parseFloat(s.purchaseAmount) || 0)
+      return sum + (s.purchaseAmount || 0)
     }, 0)
   })
 
   // Calculate pending amount
   const pendingAmount = computed(() => {
     return pendingPayments.value.reduce((sum, s) => {
-      return sum + (parseFloat(s.purchaseAmount) || 0)
+      return sum + (s.purchaseAmount || 0)
     }, 0)
   })
 

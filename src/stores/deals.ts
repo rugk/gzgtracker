@@ -2,9 +2,10 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { storage, STORAGE_KEYS } from '@/utils/storage'
 import { isAfter, isBefore, isWithinInterval, parseISO } from 'date-fns'
+import type { Deal, DealForm } from '@/types'
 
 export const useDealsStore = defineStore('deals', () => {
-  const deals = ref([])
+  const deals = ref<Deal[]>([])
   const loading = ref(false)
 
   // Load deals from storage
@@ -23,8 +24,8 @@ export const useDealsStore = defineStore('deals', () => {
   }
 
   // Add deal
-  function addDeal(deal) {
-    const newDeal = {
+  function addDeal(deal: DealForm) {
+    const newDeal: Deal = {
       id: Date.now().toString(),
       company: deal.company,
       product: deal.product || '',
@@ -46,14 +47,14 @@ export const useDealsStore = defineStore('deals', () => {
   }
 
   // Update deal
-  function updateDeal(id, updates) {
+  function updateDeal(id: string, updates: Partial<Deal>) {
     const index = deals.value.findIndex(d => d.id === id)
     if (index !== -1) {
       deals.value[index] = {
         ...deals.value[index],
         ...updates,
         updatedAt: new Date().toISOString()
-      }
+      } as Deal
       saveDeals()
       return deals.value[index]
     }
@@ -61,7 +62,7 @@ export const useDealsStore = defineStore('deals', () => {
   }
 
   // Delete deal
-  function deleteDeal(id) {
+  function deleteDeal(id: string) {
     const index = deals.value.findIndex(d => d.id === id)
     if (index !== -1) {
       deals.value.splice(index, 1)
@@ -72,14 +73,14 @@ export const useDealsStore = defineStore('deals', () => {
   }
 
   // Clone deal
-  function cloneDeal(id) {
+  function cloneDeal(id: string) {
     const deal = deals.value.find(d => d.id === id)
     if (deal) {
-      const clonedDeal = {
+      const clonedDeal: Deal = {
         ...deal,
         id: Date.now().toString(),
         status: 'active',
-        startDate: new Date().toISOString().split('T')[0],
+        startDate: (new Date().toISOString().split('T')[0]) as string,
         endDate: '',
         createdAt: new Date().toISOString()
       }
@@ -92,7 +93,7 @@ export const useDealsStore = defineStore('deals', () => {
 
   // Get deal by id
   const getDealById = computed(() => {
-    return (id) => deals.value.find(d => d.id === id)
+    return (id: string) => deals.value.find(d => d.id === id)
   })
 
   // Get active deals
@@ -129,7 +130,7 @@ export const useDealsStore = defineStore('deals', () => {
 
   // Search deals
   const searchDeals = computed(() => {
-    return (query) => {
+    return (query: string) => {
       const lowerQuery = query.toLowerCase()
       return deals.value.filter(d =>
         d.company.toLowerCase().includes(lowerQuery) ||

@@ -166,7 +166,6 @@ function getOwnerNames(ownerIds) {
 </template>
 
 <style scoped>
-@import '../assets/common-styles.css';
 .ibans-list {
   display: flex;
   flex-direction: column;

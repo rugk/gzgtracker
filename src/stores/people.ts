@@ -46,9 +46,9 @@ export const usePeopleStore = defineStore('people', () => {
         ...people.value[index],
         ...updates,
         updatedAt: new Date().toISOString()
-      }
+      } as Person
       savePeople()
-      return people.value[index]
+      return people.value[index] || null
     }
     return null
   }

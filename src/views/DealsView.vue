@@ -279,7 +279,6 @@ function formatCurrency(amount) {
 </template>
 
 <style scoped>
-@import '../assets/common-styles.css';
 .filters {
   display: flex;
   gap: 1rem;

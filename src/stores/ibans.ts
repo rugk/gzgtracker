@@ -40,9 +40,9 @@ export const useIbansStore = defineStore('ibans', () => {
         ...ibans.value[index],
         ...updates,
         updatedAt: new Date().toISOString()
-      }
+      } as Iban
       saveIbans()
-      return ibans.value[index]
+      return ibans.value[index] || null
     }
     return null
   }
