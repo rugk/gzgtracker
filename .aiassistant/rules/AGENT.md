@@ -11,7 +11,7 @@ Cashback deal tracker for managing "Geld-zurück" (money-back) submissions.
 ### Requirements
 Non-functional Requirements:
 - properly localized into German (proper i18n/l10s)
-- default language English though
+- default language is English though
 - should be cross-plattform/work across devices and be syncronized
 - hosting made easy! Best have a static website at the end on GitHub Pages or so?
 - security by design and privacy by design, as potentially private data is processed
