@@ -1,16 +1,8 @@
 import {defineConfig} from 'wxt';
-import path from 'node:path';
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
     modules: ['@wxt-dev/module-vue'],
-    vite: () => ({
-        resolve: {
-            alias: {
-                '@': path.resolve(__dirname, '../src'),
-            },
-        }
-    }),
     manifest: {
         name: 'GzG Tracker',
         description:
