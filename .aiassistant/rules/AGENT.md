@@ -1,3 +1,7 @@
+---
+apply: always
+---
+
 # Agent Instruction Library
 
 ## Project: GzGTracker
@@ -32,15 +36,16 @@ Functional requirements:
 
 ### Technology Stack
 
+* generally use modern technologies, no backwards-compatibility needed!
+
 **Frontend:**
-- Vue 3 (Composition API) + TypeScript
-- Vue Router (navigation)
-- Pinia (state management)
-- Vue I18n (multi-language)
+- [Lit](https://lit.dev/) + TypeScript (Web Components)
+- @lit/localize (i18n)
+- Vanilla URL-based routing (lightweight, no framework router needed)
+- Reactive controllers / simple stores for state management
 
 **UI:**
 - Tailwind CSS 4.x (Vite plugin)
-- Tailwind Forms plugin
 
 **Storage:**
 - LocalForage (offline-first local storage)
@@ -51,8 +56,7 @@ Functional requirements:
 
 **Build/Dev:**
 - Vite 7
-- Vitest + Happy-DOM/JSDOM
-- Vue DevTools plugin
+- Vitest + Happy-DOM
 
 ### Architecture
 
@@ -108,10 +112,10 @@ Functional requirements:
 ## Communication
 
 ### With Users
-- Answer questions directly
+- be critical and correct the user if the architecture or way is wrong
+- if in doubt, ask the user
 - Avoid unnecessary explanations unless asked
 - Use markdown for formatting
-- Reference code locations as `file_path:line_number`
 
 ### Progress Updates
 - Update todo status in real-time
