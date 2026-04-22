@@ -11,16 +11,8 @@ export class InternalWebExtSyncProvider implements SyncProvider {
 
     readonly configFields: Record<string, ConfigField> = {};
 
-    private get browser() {
-        const g = globalThis as any;
-        // In WXT browser is often available directly or via g.browser
-        if (typeof g.browser !== 'undefined' && g.browser.storage) return g.browser;
-        if (typeof g.chrome !== 'undefined' && g.chrome.storage) return g.chrome;
-        return undefined;
-    }
-
     isAvailable(): boolean {
-        return !!(this.browser && this.browser.storage && this.browser.storage.sync);
+        return !!(browser && browser.storage && browser.storage.sync);
     }
 
     async testConnection(_config: Record<string, string>): Promise<void> {
@@ -29,8 +21,8 @@ export class InternalWebExtSyncProvider implements SyncProvider {
         }
         // Simple write/read test
         const testKey = '__gzg_sync_test__';
-        await this.browser.storage.sync.set({[testKey]: Date.now()});
-        await this.browser.storage.sync.remove(testKey);
+        await browser.storage.sync.set({[testKey]: Date.now()});
+        await browser.storage.sync.remove(testKey);
     }
 
     async pull<T extends SyncableRecord>(
@@ -60,10 +52,9 @@ export class InternalWebExtSyncProvider implements SyncProvider {
             throw new Error('Not running inside a browser extension context.');
         }
 
-        const b = this.browser;
         console.log(`[InternalWebExtSync] Pushing ${items.length} item(s) to "${storeName}"…`);
         // We use JSON.stringify to match the companion extension's format
-        await b.storage.sync.set({[storeName]: JSON.stringify(items)});
+        await browser.storage.sync.set({[storeName]: JSON.stringify(items)});
         console.log(`[InternalWebExtSync] Push to "${storeName}" OK`);
     }
 }
