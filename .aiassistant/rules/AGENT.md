@@ -85,7 +85,7 @@ Functional requirements:
 - Prefer Edit over Write for existing files
 - Use Write only for new files
 - Include proper error handling
-- Follow existing code style and conventions
+- Clean code! Write clean new code and possibly do refactorings on existing code if needed.
 
 ### Refactoring
 - Understand the full context before refactoring

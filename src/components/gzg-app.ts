@@ -15,39 +15,83 @@ export class GzgApp extends LitElement {
     :host {
       display: flex;
       min-height: 100vh;
-      font-family: system-ui, sans-serif;
+      font-family: system-ui, -apple-system, sans-serif;
     }
+
+    /* ---------- Sidebar ---------- */
     nav {
-      width: 220px;
-      background: #1e293b;
+      width: 240px;
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
       color: #e2e8f0;
-      padding: 1rem 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
+      flex-shrink: 0;
+      box-shadow: 2px 0 8px rgb(0 0 0 / 0.15);
     }
-    nav h1 {
+
+    .nav-header {
+      padding: 1.25rem 1.25rem 1rem;
+      border-bottom: 1px solid #334155;
+    }
+
+    .nav-header h1 {
       font-size: 1.25rem;
       font-weight: 700;
-      padding: 0 1rem 1rem;
-      border-bottom: 1px solid #334155;
       margin: 0;
+      color: #f8fafc;
+      letter-spacing: -0.01em;
     }
+
+    .nav-header p {
+      margin: 0.25rem 0 0;
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem 0;
+      flex: 1;
+    }
+
     nav a {
-      display: block;
-      padding: 0.625rem 1rem;
-      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      padding: 0.625rem 1.25rem;
+      color: #94a3b8;
       text-decoration: none;
-      transition: background 0.15s;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background 0.15s, color 0.15s;
+      border-left: 3px solid transparent;
     }
-    nav a:hover,
+
+    nav a:hover {
+      background: rgb(255 255 255 / 0.05);
+      color: #e2e8f0;
+    }
+
     nav a[aria-current='page'] {
-      background: #334155;
+      background: rgb(255 255 255 / 0.08);
       color: #fff;
+      border-left-color: #3b82f6;
     }
+
+    nav a .icon {
+      font-size: 1.125rem;
+      width: 1.5rem;
+      text-align: center;
+    }
+
+    /* ---------- Main ---------- */
     main {
       flex: 1;
-      padding: 2rem;
+      padding: 2rem 2.5rem;
       background: #f8fafc;
+      overflow-y: auto;
     }
   `;
 
@@ -91,27 +135,32 @@ export class GzgApp extends LitElement {
   }
 
   render() {
-    const links: { route: Route; key: string }[] = [
-      { route: 'dashboard', key: 'nav.dashboard' },
-      { route: 'deals', key: 'nav.deals' },
-      { route: 'submissions', key: 'nav.submissions' },
-      { route: 'people', key: 'nav.people' },
-      { route: 'ibans', key: 'nav.ibans' },
-      { route: 'settings', key: 'nav.settings' },
+    const links: { route: Route; key: string; icon: string }[] = [
+      { route: 'dashboard', key: 'nav.dashboard', icon: '📊' },
+      { route: 'deals', key: 'nav.deals', icon: '🏷️' },
+      { route: 'submissions', key: 'nav.submissions', icon: '📬' },
+      { route: 'people', key: 'nav.people', icon: '👤' },
+      { route: 'ibans', key: 'nav.ibans', icon: '🏦' },
+      { route: 'settings', key: 'nav.settings', icon: '⚙️' },
     ];
 
     return html`
       <nav>
-        <h1>${t('app.title')}</h1>
-        ${links.map(
-          (l) => html`
-            <a
-              href="#/${l.route}"
-              aria-current=${this._route === l.route ? 'page' : 'false'}
-              @click=${(e: Event) => this._nav(l.route, e)}
-            >${t(l.key)}</a>
-          `,
-        )}
+        <div class="nav-header">
+          <h1>${t('app.title')}</h1>
+          <p>Cashback Manager</p>
+        </div>
+        <div class="nav-links">
+          ${links.map(
+            (l) => html`
+              <a
+                href="#/${l.route}"
+                aria-current=${this._route === l.route ? 'page' : 'false'}
+                @click=${(e: Event) => this._nav(l.route, e)}
+              ><span class="icon">${l.icon}</span>${t(l.key)}</a>
+            `,
+          )}
+        </div>
       </nav>
       <main>${this._renderView()}</main>
     `;
