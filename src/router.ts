@@ -1,21 +1,15 @@
-export type Route = 'dashboard' | 'deals' | 'submissions' | 'people' | 'ibans' | 'settings';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
-const VALID_ROUTES: Route[] = ['dashboard', 'deals', 'submissions', 'people', 'ibans', 'settings'];
+const routes = [
+  { path: '/', name: 'dashboard', component: () => import('./views/DashboardView.vue') },
+  { path: '/deals', name: 'deals', component: () => import('./views/DealsView.vue') },
+  { path: '/submissions', name: 'submissions', component: () => import('./views/SubmissionsView.vue') },
+  { path: '/people', name: 'people', component: () => import('./views/PeopleView.vue') },
+  { path: '/ibans', name: 'ibans', component: () => import('./views/IbansView.vue') },
+  { path: '/settings', name: 'settings', component: () => import('./views/SettingsView.vue') },
+];
 
-export function getCurrentRoute(): Route {
-  const hash = window.location.hash.replace('#/', '').replace('#', '');
-  if (VALID_ROUTES.includes(hash as Route)) {
-    return hash as Route;
-  }
-  return 'dashboard';
-}
-
-export function navigate(route: Route): void {
-  window.location.hash = `#/${route}`;
-}
-
-export function onRouteChange(callback: (route: Route) => void): () => void {
-  const handler = () => callback(getCurrentRoute());
-  window.addEventListener('hashchange', handler);
-  return () => window.removeEventListener('hashchange', handler);
-}
+export const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
+});

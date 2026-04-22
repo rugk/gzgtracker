@@ -39,10 +39,10 @@ Functional requirements:
 * generally use modern technologies, no backwards-compatibility needed!
 
 **Frontend:**
-- [Lit](https://lit.dev/) + TypeScript (Web Components)
-- @lit/localize (i18n)
-- Vanilla URL-based routing (lightweight, no framework router needed)
-- Reactive controllers / simple stores for state management
+- [Vue 3](https://vuejs.org/) + TypeScript (Composition API, `<script setup>`)
+- [Vue Router](https://router.vuejs.org/) (hash-based for static hosting)
+- [Pinia](https://pinia.vuejs.org/) (state management)
+- [Vue I18n](https://vue-i18n.intlify.dev/) (i18n/l10n)
 
 **UI:**
 - Tailwind CSS 4.x (Vite plugin)
@@ -57,6 +57,7 @@ Functional requirements:
 **Build/Dev:**
 - Vite 7
 - Vitest + Happy-DOM
+- vue-tsc for type checking
 
 ### Architecture
 

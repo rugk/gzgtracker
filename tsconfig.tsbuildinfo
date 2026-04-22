@@ -1,0 +1,1 @@
+{"root":["./src/i18n.ts","./src/main.ts","./src/models.ts","./src/router.ts","./src/store.ts","./src/app.vue","./src/views/dashboardview.vue","./src/views/dealsview.vue","./src/views/ibansview.vue","./src/views/peopleview.vue","./src/views/settingsview.vue","./src/views/submissionsview.vue","./env.d.ts"],"version":"5.9.3"}

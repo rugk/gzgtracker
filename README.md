@@ -1,18 +1,20 @@
 # GzG Tracker
 
-Cashback deal tracker for managing "Geld-zurück" (money-back) submissions. Built with **Lit** (Web Components), **Tailwind CSS 4**, and **Vite**.
+Cashback deal tracker for managing "Geld-zurück" (money-back) submissions.
 
 ## Tech Stack
 
 | Layer       | Technology                          |
 |-------------|-------------------------------------|
-| Components  | [Lit](https://lit.dev/) + TypeScript |
-| Styling     | [Tailwind CSS 4](https://tailwindcss.com/) (Vite plugin) |
-| Storage     | [LocalForage](https://localforage.github.io/localForage/) (offline-first) |
-| Routing     | Vanilla hash-based router           |
-| i18n        | `@lit/localize` (planned)           |
-| Build       | [Vite 7](https://vite.dev/)         |
-| Tests       | [Vitest](https://vitest.dev/) + Happy-DOM |
+| Framework   | Vue 3 (Composition API, `<script setup>`) |
+| Routing     | Vue Router (hash-based)             |
+| State       | Pinia                               |
+| i18n        | Vue I18n                            |
+| Styling     | Tailwind CSS 4.x (Vite plugin)      |
+| Storage     | LocalForage (offline-first)         |
+| Build       | Vite 7                              |
+| Tests       | Vitest + Happy-DOM                  |
+| Type Check  | vue-tsc                             |
 
 ## Getting Started
 
@@ -21,60 +23,33 @@ Cashback deal tracker for managing "Geld-zurück" (money-back) submissions. Buil
 - Node.js ≥ 20
 - npm ≥ 10
 
-### Install
+### Install & Run
 
-```sh
-npm install
-```
-
-### Develop
-
-```sh
-npm run dev
-```
-
-Opens a dev server at `http://localhost:5173` with hot-module replacement.
-
-### Build
-
-```sh
-npm run build
-```
-
-Produces a static build in `dist/` — ready for GitHub Pages or any static host.
-
-### Preview Production Build
-
-```sh
-npm run preview
-```
-
-### Test
-
-```sh
-npm test            # single run
-npm run test:watch  # watch mode
+```bash
+npm install          # install dependencies
+npm run dev          # start dev server
+npm run build        # type-check + production build
+npm run preview      # preview production build
+npm test             # run tests
+npm run test:watch   # run tests in watch mode
 ```
 
 ## Project Structure
 
 ```
 src/
-├── main.ts                  # entry point
-├── router.ts                # hash-based routing
-├── i18n.ts                  # internationalisation helpers
-├── styles.css               # Tailwind CSS entry
-├── components/
-│   ├── gzg-app.ts           # app shell & navigation
-│   └── views/
-│       ├── gzg-dashboard.ts
-│       ├── gzg-deals.ts
-│       ├── gzg-submissions.ts
-│       ├── gzg-people.ts
-│       ├── gzg-ibans.ts
-│       └── gzg-settings.ts
+├── main.ts          # app entry — creates Vue app, installs plugins
+├── App.vue          # root component with nav + router-view
+├── router.ts        # Vue Router (hash history, lazy-loaded views)
+├── i18n.ts          # Vue I18n setup (en/de)
+├── store.ts         # generic LocalForage-backed CRUD store
+├── models.ts        # TypeScript interfaces (Person, Iban, Deal, Submission)
+├── styles.css       # Tailwind CSS entry
+└── views/
+    ├── DashboardView.vue
+    ├── DealsView.vue
+    ├── SubmissionsView.vue
+    ├── PeopleView.vue
+    ├── IbansView.vue
+    └── SettingsView.vue
 ```
-
-## License
-
-Private — not yet published.
