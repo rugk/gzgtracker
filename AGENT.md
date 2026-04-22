@@ -4,6 +4,32 @@
 
 Cashback deal tracker for managing "Geld-zurück" (money-back) submissions.
 
+### Requirements
+Non-functional Requirements:
+- properly localized into German (proper i18n/l10s)
+- default language English though
+- should be cross-plattform/work across devices and be syncronized
+- hosting made easy! Best have a static website at the end on GitHub Pages or so?
+- security by design and privacy by design, as potentially private data is processed
+- expandable, more features can later be thought of.
+- maybe offline first (https://offlinefirst.org/) aka save everything in local storage(?) / PWA Progressive Web Application
+- in the end, usable by the public/hostable
+- modern web browsers e.g. can be supported is more than enough, no backward-compatibility/old browser support is needed
+- generally, also use modern & clean code
+- an Android app would be nice, but is not needed for the first step/could be later useful though
+
+Functional requirements:
+- One person/people can have multiple IBANs.
+- An IBAN belongs to some bank.
+- A company offers some GzG deal.
+- One IBAN could be owned by multiple people (shared bank accounts etc.)
+- people often but not always need to provide stuff like email (99% of the cases, you may want to use temporary emails for each deal or at least company), adress, sometime sphone number (sometimes even verified)
+- There exist many gzg deals, they should be trackable with start date/end date etc. (end dates often are also renewed/new conditions are applied); they often re-appear in similar fashion (so cloning would be useful)
+- they have different conditions and participation counts ("Teilnahmezahl") for entering stuff like "1000per week at 9 o'clock monday" or so, that may be enterable, but can differ quite much e.g. "max 3000, but each week a random weekday gets between 200-1000 partitipation counts at 9-12" etc. etc.
+- The community offers a publicly maintained GzG deal Google Docs table in https://docs.google.com/spreadsheets/d/1wcqckNai9SyRbQLt-pj6FHzGM7sypoET9glyAE05u2E/edit#gid=1921596076 (see also their columns) - this could be used as a source for deals.
+- partial cashbacks for a gzg deal are possible (like buy two, pay one; or just get some money back etc.)
+- proprietary platforms like Scondoo, marktguru, couponplatz and ShopBuddies provide their own cashback (gzg) deals or even coupons (like couponplatz) for offering.
+
 ### Technology Stack
 
 **Frontend:**
