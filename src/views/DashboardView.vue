@@ -2,7 +2,6 @@
 import {onMounted, ref} from 'vue';
 import {useI18n} from 'vue-i18n';
 import {dealStore, ibanStore, peopleStore, submissionStore} from '../store';
-import {FwbCard} from 'flowbite-vue';
 
 const { t } = useI18n();
 
@@ -25,23 +24,23 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h1 class="text-2xl font-bold mb-6">{{ t('nav.dashboard') }}</h1>
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    <fwb-card class="text-center">
-      <div class="text-3xl font-bold">{{ counts.deals }}</div>
-      <div class="text-sm text-gray-500">{{ t('nav.deals') }}</div>
-    </fwb-card>
-    <fwb-card class="text-center">
-      <div class="text-3xl font-bold">{{ counts.submissions }}</div>
-      <div class="text-sm text-gray-500">{{ t('nav.submissions') }}</div>
-    </fwb-card>
-    <fwb-card class="text-center">
-      <div class="text-3xl font-bold">{{ counts.people }}</div>
-      <div class="text-sm text-gray-500">{{ t('nav.people') }}</div>
-    </fwb-card>
-    <fwb-card class="text-center">
-      <div class="text-3xl font-bold">{{ counts.ibans }}</div>
-      <div class="text-sm text-gray-500">{{ t('nav.ibans') }}</div>
-    </fwb-card>
+  <h1>{{ t('nav.dashboard') }}</h1>
+  <div class="dashboard-grid">
+    <div class="dashboard-card">
+      <div class="count">{{ counts.deals }}</div>
+      <div class="label">{{ t('nav.deals') }}</div>
+    </div>
+    <div class="dashboard-card">
+      <div class="count">{{ counts.submissions }}</div>
+      <div class="label">{{ t('nav.submissions') }}</div>
+    </div>
+    <div class="dashboard-card">
+      <div class="count">{{ counts.people }}</div>
+      <div class="label">{{ t('nav.people') }}</div>
+    </div>
+    <div class="dashboard-card">
+      <div class="count">{{ counts.ibans }}</div>
+      <div class="label">{{ t('nav.ibans') }}</div>
+    </div>
   </div>
 </template>

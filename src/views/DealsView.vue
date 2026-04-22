@@ -1,25 +1,13 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, useTemplateRef} from 'vue';
 import {useI18n} from 'vue-i18n';
 import {dealStore} from '../store';
 import type {Deal} from '../models';
-import {
-  FwbButton,
-  FwbInput,
-  FwbModal,
-  FwbTable,
-  FwbTableBody,
-  FwbTableCell,
-  FwbTableHead,
-  FwbTableHeadCell,
-  FwbTableRow,
-  FwbTextarea
-} from 'flowbite-vue';
 
 const { t } = useI18n();
 
 const deals = ref<Deal[]>([]);
-const showModal = ref(false);
+const dialogRef = useTemplateRef<HTMLDialogElement>('dialogRef');
 const editingDeal = ref<Partial<Deal> | null>(null);
 
 const form = ref({
@@ -49,7 +37,7 @@ function openAddModal() {
     url: '',
     notes: ''
   };
-  showModal.value = true;
+  dialogRef.value?.showModal();
 }
 
 function openEditModal(deal: Deal) {
@@ -63,7 +51,7 @@ function openEditModal(deal: Deal) {
     url: deal.url,
     notes: deal.notes
   };
-  showModal.value = true;
+  dialogRef.value?.showModal();
 }
 
 async function saveDeal() {
@@ -72,7 +60,7 @@ async function saveDeal() {
   } else {
     await dealStore.create(form.value);
   }
-  showModal.value = false;
+  dialogRef.value?.close();
   await loadDeals();
 }
 
@@ -85,72 +73,78 @@ async function deleteDeal(id: string) {
 </script>
 
 <template>
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold">{{ t('nav.deals') }}</h1>
-    <fwb-button @click="openAddModal" color="blue">
-      {{ t('common.add') }}
-    </fwb-button>
+  <div class="header-row">
+    <h1>{{ t('nav.deals') }}</h1>
+    <button @click="openAddModal">{{ t('common.add') }}</button>
   </div>
 
-  <fwb-table hoverable>
-    <fwb-table-head>
-      <fwb-table-head-cell>Title</fwb-table-head-cell>
-      <fwb-table-head-cell>Brand</fwb-table-head-cell>
-      <fwb-table-head-cell>Max Cashback</fwb-table-head-cell>
-      <fwb-table-head-cell>End Date</fwb-table-head-cell>
-      <fwb-table-head-cell>
-        <span class="sr-only">Actions</span>
-      </fwb-table-head-cell>
-    </fwb-table-head>
-    <fwb-table-body>
-      <fwb-table-row v-for="deal in deals" :key="deal.id">
-        <fwb-table-cell class="font-medium text-gray-900 dark:text-white">{{ deal.title }}</fwb-table-cell>
-        <fwb-table-cell>{{ deal.brand }}</fwb-table-cell>
-        <fwb-table-cell>{{ deal.maxCashback.toFixed(2) }} €</fwb-table-cell>
-        <fwb-table-cell>{{ deal.endDate }}</fwb-table-cell>
-        <fwb-table-cell class="flex justify-end gap-2">
-          <fwb-button @click="openEditModal(deal)" color="blue" size="sm" outline>
-            {{ t('common.edit') }}
-          </fwb-button>
-          <fwb-button @click="deleteDeal(deal.id)" color="red" size="sm" outline>
-            {{ t('common.delete') }}
-          </fwb-button>
-        </fwb-table-cell>
-      </fwb-table-row>
-      <fwb-table-row v-if="deals.length === 0">
-        <fwb-table-cell colspan="5" class="text-center py-4 text-gray-500">
-          {{ t('common.noData') }}
-        </fwb-table-cell>
-      </fwb-table-row>
-    </fwb-table-body>
-  </fwb-table>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Brand</th>
+      <th>Max Cashback</th>
+      <th>End Date</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="deal in deals" :key="deal.id">
+      <td><strong>{{ deal.title }}</strong></td>
+      <td>{{ deal.brand }}</td>
+      <td>{{ deal.maxCashback.toFixed(2) }} €</td>
+      <td>{{ deal.endDate }}</td>
+      <td class="actions">
+        <button class="outline" @click="openEditModal(deal)">{{ t('common.edit') }}</button>
+        <button class="outline secondary" @click="deleteDeal(deal.id)">{{ t('common.delete') }}</button>
+      </td>
+    </tr>
+    <tr v-if="deals.length === 0">
+      <td colspan="5" style="text-align:center">{{ t('common.noData') }}</td>
+    </tr>
+    </tbody>
+  </table>
 
-  <fwb-modal v-if="showModal" @close="showModal = false">
-    <template #header>
-      <div class="flex items-center text-lg">
-        {{ editingDeal ? t('common.edit') : t('common.add') }} {{ t('nav.deals').toLowerCase() }}
+  <dialog ref="dialogRef">
+    <article>
+      <header>
+        <button aria-label="Close" rel="prev" @click="dialogRef?.close()"></button>
+        <h2>{{ editingDeal ? t('common.edit') : t('common.add') }} {{ t('nav.deals').toLowerCase() }}</h2>
+      </header>
+      <div class="form-grid">
+        <label class="full-width">
+          Title
+          <input v-model="form.title" placeholder="Brand Cashback" required/>
+        </label>
+        <label>
+          Brand
+          <input v-model="form.brand" placeholder="Brand Name" required/>
+        </label>
+        <label>
+          Max Cashback (€)
+          <input v-model="form.maxCashback" type="number" step="0.01" required/>
+        </label>
+        <label>
+          Start Date
+          <input v-model="form.startDate" type="date" required/>
+        </label>
+        <label>
+          End Date
+          <input v-model="form.endDate" type="date" required/>
+        </label>
+        <label class="full-width">
+          URL
+          <input v-model="form.url" placeholder="https://..."/>
+        </label>
+        <label class="full-width">
+          Notes
+          <textarea v-model="form.notes" placeholder="Additional info..."></textarea>
+        </label>
       </div>
-    </template>
-    <template #body>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <fwb-input v-model="form.title" label="Title" placeholder="Brand Cashback" required class="md:col-span-2"/>
-        <fwb-input v-model="form.brand" label="Brand" placeholder="Brand Name" required/>
-        <fwb-input v-model="form.maxCashback" label="Max Cashback (€)" type="number" step="0.01" required/>
-        <fwb-input v-model="form.startDate" label="Start Date" type="date" required/>
-        <fwb-input v-model="form.endDate" label="End Date" type="date" required/>
-        <fwb-input v-model="form.url" label="URL" placeholder="https://..." class="md:col-span-2"/>
-        <fwb-textarea v-model="form.notes" label="Notes" placeholder="Additional info..." class="md:col-span-2"/>
-      </div>
-    </template>
-    <template #footer>
-      <div class="flex justify-between">
-        <fwb-button @click="showModal = false" color="alternative">
-          {{ t('common.cancel') }}
-        </fwb-button>
-        <fwb-button @click="saveDeal" color="blue">
-          {{ t('common.save') }}
-        </fwb-button>
-      </div>
-    </template>
-  </fwb-modal>
+      <footer class="modal-footer">
+        <button class="secondary" @click="dialogRef?.close()">{{ t('common.cancel') }}</button>
+        <button @click="saveDeal">{{ t('common.save') }}</button>
+      </footer>
+    </article>
+  </dialog>
 </template>

@@ -45,8 +45,8 @@ Functional requirements:
 - [Vue I18n](https://vue-i18n.intlify.dev/) (i18n/l10n)
 
 **UI:**
-- Tailwind CSS 4.x (Vite plugin)
-- Flowbite for components
+
+- Pico CSS
 
 **Storage:**
 - LocalForage (offline-first local storage)

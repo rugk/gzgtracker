@@ -10,7 +10,7 @@ Cashback deal tracker for managing "Geld-zurück" (money-back) submissions.
 | Routing    | Vue Router (hash-based)                   |
 | State      | Pinia                                     |
 | i18n       | Vue I18n                                  |
-| Styling    | Tailwind CSS 4.x (Vite plugin) & Flowbite |
+| Styling    | Pico CSS (classless/semantic)             |
 | Storage    | LocalForage (offline-first)               |
 | Build      | Vite 7                                    |
 | Tests      | Vitest + Happy-DOM                        |
@@ -44,7 +44,7 @@ src/
 ├── i18n.ts          # Vue I18n setup (en/de)
 ├── store.ts         # generic LocalForage-backed CRUD store
 ├── models.ts        # TypeScript interfaces (Person, Iban, Deal, Submission)
-├── styles.css       # Tailwind CSS entry
+├── styles.css       # Pico CSS entry + minimal custom styles
 └── views/
     ├── DashboardView.vue
     ├── DealsView.vue

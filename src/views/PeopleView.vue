@@ -1,24 +1,13 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, useTemplateRef} from 'vue';
 import {useI18n} from 'vue-i18n';
 import {peopleStore} from '../store';
 import type {Person} from '../models';
-import {
-  FwbButton,
-  FwbInput,
-  FwbModal,
-  FwbTable,
-  FwbTableBody,
-  FwbTableCell,
-  FwbTableHead,
-  FwbTableHeadCell,
-  FwbTableRow
-} from 'flowbite-vue';
 
 const { t } = useI18n();
 
 const people = ref<Person[]>([]);
-const showModal = ref(false);
+const dialogRef = useTemplateRef<HTMLDialogElement>('dialogRef');
 const editingPerson = ref<Partial<Person> | null>(null);
 
 const form = ref({
@@ -35,13 +24,13 @@ onMounted(loadPeople);
 function openAddModal() {
   editingPerson.value = null;
   form.value = {name: '', email: ''};
-  showModal.value = true;
+  dialogRef.value?.showModal();
 }
 
 function openEditModal(person: Person) {
   editingPerson.value = person;
   form.value = {name: person.name, email: person.email};
-  showModal.value = true;
+  dialogRef.value?.showModal();
 }
 
 async function savePerson() {
@@ -50,7 +39,7 @@ async function savePerson() {
   } else {
     await peopleStore.create(form.value);
   }
-  showModal.value = false;
+  dialogRef.value?.close();
   await loadPeople();
 }
 
@@ -63,63 +52,52 @@ async function deletePerson(id: string) {
 </script>
 
 <template>
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold">{{ t('nav.people') }}</h1>
-    <fwb-button @click="openAddModal" color="blue">
-      {{ t('common.add') }}
-    </fwb-button>
+  <div class="header-row">
+    <h1>{{ t('nav.people') }}</h1>
+    <button @click="openAddModal">{{ t('common.add') }}</button>
   </div>
 
-  <fwb-table hoverable>
-    <fwb-table-head>
-      <fwb-table-head-cell>Name</fwb-table-head-cell>
-      <fwb-table-head-cell>Email</fwb-table-head-cell>
-      <fwb-table-head-cell>
-        <span class="sr-only">Actions</span>
-      </fwb-table-head-cell>
-    </fwb-table-head>
-    <fwb-table-body>
-      <fwb-table-row v-for="person in people" :key="person.id">
-        <fwb-table-cell>{{ person.name }}</fwb-table-cell>
-        <fwb-table-cell>{{ person.email }}</fwb-table-cell>
-        <fwb-table-cell class="flex justify-end gap-2">
-          <fwb-button @click="openEditModal(person)" color="blue" size="sm" outline>
-            {{ t('common.edit') }}
-          </fwb-button>
-          <fwb-button @click="deletePerson(person.id)" color="red" size="sm" outline>
-            {{ t('common.delete') }}
-          </fwb-button>
-        </fwb-table-cell>
-      </fwb-table-row>
-      <fwb-table-row v-if="people.length === 0">
-        <fwb-table-cell colspan="3" class="text-center py-4 text-gray-500">
-          {{ t('common.noData') }}
-        </fwb-table-cell>
-      </fwb-table-row>
-    </fwb-table-body>
-  </fwb-table>
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="person in people" :key="person.id">
+      <td>{{ person.name }}</td>
+      <td>{{ person.email }}</td>
+      <td class="actions">
+        <button class="outline" @click="openEditModal(person)">{{ t('common.edit') }}</button>
+        <button class="outline secondary" @click="deletePerson(person.id)">{{ t('common.delete') }}</button>
+      </td>
+    </tr>
+    <tr v-if="people.length === 0">
+      <td colspan="3" style="text-align:center">{{ t('common.noData') }}</td>
+    </tr>
+    </tbody>
+  </table>
 
-  <fwb-modal v-if="showModal" @close="showModal = false">
-    <template #header>
-      <div class="flex items-center text-lg">
-        {{ editingPerson ? t('common.edit') : t('common.add') }} {{ t('nav.people').toLowerCase() }}
-      </div>
-    </template>
-    <template #body>
-      <div class="space-y-4">
-        <fwb-input v-model="form.name" label="Name" placeholder="John Doe" required/>
-        <fwb-input v-model="form.email" label="Email" type="email" placeholder="john@example.com" required/>
-      </div>
-    </template>
-    <template #footer>
-      <div class="flex justify-between">
-        <fwb-button @click="showModal = false" color="alternative">
-          {{ t('common.cancel') }}
-        </fwb-button>
-        <fwb-button @click="savePerson" color="blue">
-          {{ t('common.save') }}
-        </fwb-button>
-      </div>
-    </template>
-  </fwb-modal>
+  <dialog ref="dialogRef">
+    <article>
+      <header>
+        <button aria-label="Close" rel="prev" @click="dialogRef?.close()"></button>
+        <h2>{{ editingPerson ? t('common.edit') : t('common.add') }} {{ t('nav.people').toLowerCase() }}</h2>
+      </header>
+      <label>
+        Name
+        <input v-model="form.name" placeholder="John Doe" required/>
+      </label>
+      <label>
+        Email
+        <input v-model="form.email" type="email" placeholder="john@example.com" required/>
+      </label>
+      <footer class="modal-footer">
+        <button class="secondary" @click="dialogRef?.close()">{{ t('common.cancel') }}</button>
+        <button @click="savePerson">{{ t('common.save') }}</button>
+      </footer>
+    </article>
+  </dialog>
 </template>
