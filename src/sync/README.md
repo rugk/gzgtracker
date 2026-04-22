@@ -8,18 +8,14 @@ pluggable **sync providers**. It follows the **Strategy pattern**: a common
 handle the transport details for each backend (CouchDB, WebDAV, browser
 extension, etc.).
 
-```
-┌─────────────┐      ┌───────────────┐      ┌──────────────────┐
-│ SettingsView │─────▶│  SyncService  │─────▶│  SyncProvider    │
-│   (UI)       │      │ (orchestrator)│      │  (strategy i/f)  │
-└─────────────┘      └───────────────┘      └──────────────────┘
-                            │                        ▲
-                            │                        │ implements
-                     ┌──────┴──────┐        ┌────────┴─────────┐
-                     │ SyncRegistry │        │ CouchDbSyncProv. │
-                     │ (provider   │        │ WebExtSyncProv.  │
-                     │  catalogue) │        │ …future ones…    │
-                     └─────────────┘        └──────────────────┘
+```mermaid
+graph LR
+    SettingsView["SettingsView\n(UI)"] --> SyncService["SyncService\n(orchestrator)"]
+    SyncService --> SyncProvider["SyncProvider\n(strategy i/f)"]
+    SyncService --> SyncRegistry["SyncRegistry\n(provider catalogue)"]
+    CouchDbSyncProv["CouchDbSyncProv."] -.->|implements| SyncProvider
+    WebExtSyncProv["WebExtSyncProv."] -.->|implements| SyncProvider
+    FutureProviders["…future ones…"] -.->|implements| SyncProvider
 ```
 
 ## Key Components
@@ -133,12 +129,10 @@ Sync).
 
 **Architecture:**
 
-```
-┌──────────────┐  CustomEvent   ┌────────────────┐  runtime msg  ┌────────────────┐
-│  Web App     │ ◄────────────► │ Content Script  │ ◄───────────► │ Background     │
-│  (provider)  │ gzg-sync-*    │ (comctx inject) │  (comctx)     │ (comctx provide│
-└──────────────┘                └────────────────┘               │  storage.sync) │
-                                                                  └────────────────┘
+```mermaid
+graph LR
+    WebApp["Web App\n(provider)"] <-->|" CustomEvent\ngzg-sync-* "| ContentScript["Content Script\n(comctx inject)"]
+    ContentScript <-->|" runtime msg\n(comctx) "| Background["Background\n(comctx provide\nstorage.sync)"]
 ```
 
 - The **background script** provides a `SyncStorageService` via
