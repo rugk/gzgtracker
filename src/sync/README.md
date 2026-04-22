@@ -155,8 +155,8 @@ graph LR
 **Config fields:** None (the extension is auto-detected via content script
 injection).
 
-**Limitations:** `browser.storage.sync` has an 8 KB per-key and 100 KB total
-quota. Large datasets may require chunking in the future.
+See [extension/README.md](../../extension/README.md) for detailed extension architecture and communication bridge
+details.
 
 ## Future Ideas
 
