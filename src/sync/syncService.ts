@@ -121,6 +121,17 @@ class SyncService {
             }
         }
     }
+
+    /**
+     * Clear all local data across all stores.
+     */
+    async clearAllData(): Promise<void> {
+        for (const storeName of STORE_NAMES) {
+            const localStore = localforage.createInstance({name: storeName});
+            await localStore.clear();
+        }
+        await SYNC_CONFIG_STORE.clear();
+    }
 }
 
 export const syncService = new SyncService();

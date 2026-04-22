@@ -39,6 +39,11 @@ export default defineContentScript({
                         response = {id, ok: true};
                         break;
                     }
+                    case 'clearAll': {
+                        await storage.clearAll();
+                        response = {id, ok: true};
+                        break;
+                    }
                     default:
                         response = {id, ok: false, error: `Unknown action: ${action}`};
                 }

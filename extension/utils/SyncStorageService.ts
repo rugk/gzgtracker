@@ -28,6 +28,10 @@ export class SyncStorageService {
     async push(storeName: string, items: unknown[]): Promise<void> {
         await storage.setItem(`sync:${storeName}`, items);
     }
+
+    async clearAll(): Promise<void> {
+        await storage.clear('sync');
+    }
 }
 
 export const [provideSyncStorage, injectSyncStorage] = defineProxy(

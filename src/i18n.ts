@@ -41,6 +41,9 @@ const messages = {
       import: 'Import from JSON',
       importSuccess: 'Data imported successfully ✓',
       importError: 'Import failed: ',
+      reset: 'Reset All Data',
+      resetConfirm: 'Are you sure you want to delete ALL data? This cannot be undone.',
+      resetSuccess: 'All data cleared successfully ✓',
     },
   },
   de: {
@@ -83,6 +86,9 @@ const messages = {
       import: 'Von JSON importieren',
       importSuccess: 'Daten erfolgreich importiert ✓',
       importError: 'Import fehlgeschlagen: ',
+      reset: 'Alle Daten zurücksetzen',
+      resetConfirm: 'Sind Sie sicher, dass Sie ALLE Daten löschen möchten? Dies kann nicht rückgängig gemacht werden.',
+      resetSuccess: 'Alle Daten erfolgreich gelöscht ✓',
     },
   },
 };

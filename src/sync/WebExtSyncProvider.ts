@@ -63,6 +63,17 @@ export class WebExtSyncProvider implements SyncProvider {
         console.log(`[WebExtSync] Push to "${storeName}" OK`);
     }
 
+    async clearAll(): Promise<void> {
+        console.log('[WebExtSync] Clearing all extension storage…');
+        const resp = await this.sendMessage({action: 'clearAll'});
+        if (!resp?.ok) {
+            const err = (resp?.error as string) ?? 'Clear failed';
+            console.error('[WebExtSync] Clear failed:', err);
+            throw new Error(err);
+        }
+        console.log('[WebExtSync] Clear OK');
+    }
+
     /**
      * Send a message to the companion extension's content script via
      * CustomEvent and wait for the response.

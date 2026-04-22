@@ -41,6 +41,11 @@ export interface SyncProvider {
      * Push local items to the remote.
      */
     push<T extends SyncableRecord>(storeName: string, items: T[], config: Record<string, string>): Promise<void>;
+
+    /**
+     * Clear all data from the remote (optional).
+     */
+    clearAll?(): Promise<void>;
 }
 
 export interface ConfigField {

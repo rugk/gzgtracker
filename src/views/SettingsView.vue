@@ -108,6 +108,34 @@ function handleFileUpload(event: Event) {
   };
   reader.readAsText(file);
 }
+
+async function resetAll() {
+  if (!confirm(t('sync.resetConfirm'))) return;
+
+  await syncService.clearAllData();
+
+  // Also clear the current sync provider's storage if it's an extension provider
+  const provider = selectedProvider.value;
+  if (provider && (provider.key === 'webext' || provider.key === 'webext-internal')) {
+    try {
+      if (provider.clearAll) {
+        await provider.clearAll();
+      }
+    } catch (e) {
+      console.warn('Failed to clear extension storage:', e);
+    }
+  } else if (selectedProviderKey.value === 'webext-internal') {
+    // Fallback if selectedProvider ref is not updated yet but key is set
+    try {
+      const {storage} = await import('@wxt-dev/storage');
+      await storage.clear('sync');
+    } catch (e) {
+      console.warn('Could not clear extension storage directly:', e);
+    }
+  }
+
+  syncStatus.value = t('sync.resetSuccess');
+}
 </script>
 
 <template>
@@ -168,5 +196,9 @@ function handleFileUpload(event: Event) {
       <input type="file" accept=".json" @change="handleFileUpload"
              style="font-size: 0.8rem; border: none; padding: 0;"/>
     </div>
+  </article>
+
+  <article style="border-top: 1px solid var(--pico-muted-border-color); padding-top: 2rem;">
+    <button class="outline contrast" @click="resetAll">{{ t('sync.reset') }}</button>
   </article>
 </template>

@@ -63,4 +63,9 @@ export class InternalWebExtSyncProvider implements SyncProvider {
         await storage.setItem(`sync:${storeName}`, JSON.stringify(items));
         console.log(`[InternalWebExtSync] Push to "${storeName}" OK`);
     }
+
+    async clearAll(): Promise<void> {
+        if (!this.isAvailable()) return;
+        await storage.clear('sync');
+    }
 }
