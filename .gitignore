@@ -1,5 +1,8 @@
 node_modules
 
+# TS
+/tsconfig.tsbuildinfo
+
 # Output
 dist
 .output
