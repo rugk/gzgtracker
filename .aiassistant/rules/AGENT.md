@@ -46,6 +46,7 @@ Functional requirements:
 
 **UI:**
 - Tailwind CSS 4.x (Vite plugin)
+- Flowbite for components
 
 **Storage:**
 - LocalForage (offline-first local storage)

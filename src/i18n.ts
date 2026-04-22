@@ -1,4 +1,4 @@
-import { createI18n } from 'vue-i18n';
+import {createI18n} from 'vue-i18n';
 
 const messages = {
   en: {
@@ -18,6 +18,7 @@ const messages = {
       cancel: 'Cancel',
       search: 'Search',
       noData: 'No data yet.',
+      confirmDelete: 'Are you sure you want to delete this item?',
     },
   },
   de: {
@@ -37,6 +38,7 @@ const messages = {
       cancel: 'Abbrechen',
       search: 'Suchen',
       noData: 'Noch keine Daten.',
+      confirmDelete: 'Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?',
     },
   },
 };

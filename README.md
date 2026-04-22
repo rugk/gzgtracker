@@ -4,17 +4,17 @@ Cashback deal tracker for managing "Geld-zurück" (money-back) submissions.
 
 ## Tech Stack
 
-| Layer       | Technology                          |
-|-------------|-------------------------------------|
-| Framework   | Vue 3 (Composition API, `<script setup>`) |
-| Routing     | Vue Router (hash-based)             |
-| State       | Pinia                               |
-| i18n        | Vue I18n                            |
-| Styling     | Tailwind CSS 4.x (Vite plugin)      |
-| Storage     | LocalForage (offline-first)         |
-| Build       | Vite 7                              |
-| Tests       | Vitest + Happy-DOM                  |
-| Type Check  | vue-tsc                             |
+| Layer      | Technology                                |
+|------------|-------------------------------------------|
+| Framework  | Vue 3 (Composition API, `<script setup>`) |
+| Routing    | Vue Router (hash-based)                   |
+| State      | Pinia                                     |
+| i18n       | Vue I18n                                  |
+| Styling    | Tailwind CSS 4.x (Vite plugin) & Flowbite |
+| Storage    | LocalForage (offline-first)               |
+| Build      | Vite 7                                    |
+| Tests      | Vitest + Happy-DOM                        |
+| Type Check | vue-tsc                                   |
 
 ## Getting Started
 

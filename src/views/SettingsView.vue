@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
+import {useI18n} from 'vue-i18n';
+import {FwbButton} from 'flowbite-vue';
 
 const { t, locale } = useI18n();
 
@@ -9,16 +10,16 @@ function toggleLocale() {
 </script>
 
 <template>
-  <h1 class="text-2xl font-bold mb-4">{{ t('nav.settings') }}</h1>
-  <div class="bg-white dark:bg-gray-800 rounded shadow p-4 space-y-4">
+  <h1 class="text-2xl font-bold mb-6">{{ t('nav.settings') }}</h1>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 space-y-4">
     <div>
-      <label class="block text-sm font-medium mb-1">Language</label>
-      <button
-        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Language / Sprache</label>
+      <fwb-button
+          color="blue"
         @click="toggleLocale"
       >
-        {{ locale === 'en' ? 'Deutsch' : 'English' }}
-      </button>
+        {{ locale === 'en' ? 'Wechseln zu Deutsch' : 'Switch to English' }}
+      </fwb-button>
     </div>
   </div>
 </template>
