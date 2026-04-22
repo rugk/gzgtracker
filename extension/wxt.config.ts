@@ -4,18 +4,12 @@ import path from 'node:path';
 // See https://wxt.dev/api/config.html
 export default defineConfig({
     modules: ['@wxt-dev/module-vue'],
-    imports: false, // Disable auto-imports to fix resolution issues with src/ files
     vite: () => ({
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, '../src'),
             },
-        },
-        build: {
-            rollupOptions: {
-                external: ['wxt/browser'],
-            },
-        },
+        }
     }),
     manifest: {
         name: 'GzG Tracker',
