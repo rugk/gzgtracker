@@ -1,6 +1,7 @@
 import type {SyncProvider} from './SyncProvider';
 import {CouchDbSyncProvider} from './CouchDbSyncProvider';
 import {WebExtSyncProvider} from './WebExtSyncProvider';
+import {InternalWebExtSyncProvider} from './InternalWebExtSyncProvider';
 
 /**
  * Registry of all available sync providers.
@@ -27,3 +28,4 @@ export const syncRegistry = new SyncRegistry();
 // Register built-in providers
 syncRegistry.register(new CouchDbSyncProvider());
 syncRegistry.register(new WebExtSyncProvider());
+syncRegistry.register(new InternalWebExtSyncProvider());

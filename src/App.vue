@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {onMounted, ref} from 'vue';
 import {useI18n} from 'vue-i18n';
 
 const { t } = useI18n();
@@ -16,6 +17,28 @@ const navItems = [
   { to: '/ibans', key: 'nav.ibans' },
   { to: '/settings', key: 'nav.settings' },
 ];
+
+const isExtensionPopup = ref(false);
+
+onMounted(() => {
+  const g = globalThis as any;
+  const b = g.browser || g.chrome;
+  // If we have browser APIs and we are in the popup (determined by window width or extension-specific markers)
+  // WXT doesn't provide a direct "isPopup" but usually popups are small.
+  // A better way is checking the URL or if we are in a tab.
+  if (b && b.tabs && b.runtime) {
+    // Basic check: if we are in a context that can create tabs but isn't a full tab itself yet (simplified)
+    isExtensionPopup.value = true;
+  }
+});
+
+function openFullTab() {
+  const g = globalThis as any;
+  const b = g.browser || g.chrome;
+  if (b && b.tabs) {
+    b.tabs.create({url: b.runtime.getURL('entrypoints/popup/index.html')});
+  }
+}
 </script>
 
 <template>
@@ -30,6 +53,12 @@ const navItems = [
       <ul>
         <li v-for="item in navItems" :key="item.to">
           <a :href="'#' + item.to">{{ t(item.key) }}</a>
+        </li>
+        <li v-if="isExtensionPopup">
+          <button class="outline" @click="openFullTab"
+                  style="padding: 0.25rem 0.5rem; font-size: 0.8rem; margin-left: 0.5rem;">
+            {{ t('nav.openFullTab') || 'Full Tab' }}
+          </button>
         </li>
       </ul>
     </nav>
@@ -53,6 +82,11 @@ const navItems = [
           <ul>
             <li v-for="item in navItems" :key="item.to">
               <a :href="'#' + item.to" @click="closeNav">{{ t(item.key) }}</a>
+            </li>
+            <li v-if="isExtensionPopup">
+              <button class="outline" @click="openFullTab" style="width: 100%; margin-top: 0.5rem;">
+                {{ t('nav.openFullTab') || 'Full Tab' }}
+              </button>
             </li>
           </ul>
         </nav>

@@ -2,7 +2,7 @@
 import {onMounted, ref, watch} from 'vue';
 import {useI18n} from 'vue-i18n';
 import type {SyncProvider} from '../sync';
-import {syncRegistry, syncService} from '../sync';
+import {InternalWebExtSyncProvider, syncRegistry, syncService} from '../sync';
 
 const { t, locale } = useI18n();
 
@@ -11,7 +11,6 @@ function toggleLocale() {
 }
 
 // --- Sync settings ---
-const providers = syncRegistry.getAll();
 const selectedProviderKey = ref('');
 const selectedProvider = ref<SyncProvider | undefined>();
 const configValues = ref<Record<string, string>>({});
@@ -28,7 +27,18 @@ watch(selectedProviderKey, (key) => {
   }
 });
 
+const allProviders = syncRegistry.getAll();
+const providers = ref<SyncProvider[]>([]);
+
 onMounted(async () => {
+  // Filter providers
+  providers.value = allProviders.filter(p => {
+    if (p instanceof InternalWebExtSyncProvider) {
+      return p.isAvailable();
+    }
+    return true;
+  });
+
   const cfg = await syncService.loadConfig();
   if (cfg) {
     selectedProviderKey.value = cfg.providerKey;

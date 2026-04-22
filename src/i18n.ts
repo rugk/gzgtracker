@@ -9,6 +9,7 @@ const messages = {
       people: 'People',
       ibans: 'IBANs',
       settings: 'Settings',
+      openFullTab: 'Open in Tab',
     },
     common: {
       add: 'Add',
@@ -45,6 +46,7 @@ const messages = {
       people: 'Personen',
       ibans: 'IBANs',
       settings: 'Einstellungen',
+      openFullTab: 'In Tab öffnen',
     },
     common: {
       add: 'Hinzufügen',

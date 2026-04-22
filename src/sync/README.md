@@ -120,12 +120,20 @@ PouchDB is loaded lazily so it doesn't affect initial page load or cause
 - [ ] Be idempotent — `push` may be called with items that already exist
   remotely.
 
-### WebExtension / browser.storage.sync (`WebExtSyncProvider.ts`)
+### WebExtension / Direct Storage (`InternalWebExtSyncProvider.ts`)
 
-Uses a companion browser extension (located in `extension/`, built with
-[WXT](https://wxt.dev/)) that stores data in `browser.storage.sync`, giving
-cross-device sync through the user's browser account (Firefox Sync / Chrome
-Sync).
+When the application is running **inside** a browser extension (e.g. as a popup), it can access `browser.storage.sync`
+directly. This is the preferred method as it avoids the messaging overhead and works seamlessly within the extension.
+
+The extension popup also provides an **"Open in Tab"** button that opens the full application in a normal browser tab
+while still maintaining direct access to `browser.storage.sync`.
+
+**Config fields:** None.
+
+### WebExtension / Bridge Provider (`WebExtSyncProvider.ts`)
+
+Used when the application is running as a **standalone website** but wants to sync via a companion extension. It uses
+`CustomEvent` messaging to talk to the extension's content script.
 
 **Architecture:**
 

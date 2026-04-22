@@ -1,12 +1,25 @@
 import {defineConfig} from 'wxt';
+import path from 'node:path';
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
     modules: ['@wxt-dev/module-vue'],
+    vite: () => ({
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, '../src'),
+            },
+        },
+        build: {
+            rollupOptions: {
+                external: ['wxt/browser'],
+            },
+        },
+    }),
     manifest: {
-        name: 'GzGTracker Sync',
+        name: 'GzG Tracker',
         description:
-            'Companion extension for GzGTracker – syncs data via browser.storage.sync.',
+            'GzG Tracker Extension – syncs data via browser.storage.sync.',
         // Firefox add-on ID for stable identification
         browser_specific_settings: {
             gecko: {
@@ -14,5 +27,9 @@ export default defineConfig({
             },
         },
         permissions: ['storage'],
+        action: {
+            default_popup: 'entrypoints/popup/index.html',
+            default_title: 'GzG Tracker',
+        },
     },
 });
