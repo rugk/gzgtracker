@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
 import {useI18n} from 'vue-i18n';
-import {dealStore} from '@/store';
-import type {Deal} from '@/models';
+import {dealStore} from '../store';
+import type {Deal} from '../models';
 import {
   FwbButton,
   FwbInput,
