@@ -35,8 +35,9 @@ export class InternalWebExtSyncProvider implements SyncProvider {
         storeName: string,
         _config: Record<string, string>,
     ): Promise<T[]> {
-        const b = this.browser;
-        if (!b) throw new Error('Extension storage not available');
+        if (!this.isAvailable()) {
+            throw new Error('Not running inside a browser extension context.');
+        }
 
         console.log(`[InternalWebExtSync] Pulling store "${storeName}"…`);
         const result = await b.storage.sync.get(storeName);
@@ -53,9 +54,11 @@ export class InternalWebExtSyncProvider implements SyncProvider {
         items: T[],
         _config: Record<string, string>,
     ): Promise<void> {
-        const b = this.browser;
-        if (!b) throw new Error('Extension storage not available');
+        if (!this.isAvailable()) {
+            throw new Error('Not running inside a browser extension context.');
+        }
 
+        const b = this.browser;
         console.log(`[InternalWebExtSync] Pushing ${items.length} item(s) to "${storeName}"…`);
         // We use JSON.stringify to match the companion extension's format
         await b.storage.sync.set({[storeName]: JSON.stringify(items)});
