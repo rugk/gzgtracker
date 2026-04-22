@@ -21,6 +21,7 @@ Non-functional Requirements:
 - modern web browsers e.g. can be supported is more than enough, no backward-compatibility/old browser support is needed
 - generally, also use modern & clean code
 - an Android app would be nice, but is not needed for the first step/could be later useful though
+- should be responsively designed, mobile-first
 
 Functional requirements:
 - One person/people can have multiple IBANs.
