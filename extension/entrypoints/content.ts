@@ -19,6 +19,7 @@ export default defineContentScript({
         window.addEventListener('gzg-sync-request', async (evt) => {
             const detail = (evt as CustomEvent).detail;
             const {id, action, storeName, items} = detail ?? {};
+            console.log('[GzGTracker Sync] Request received:', {id, action, storeName});
 
             let response: Record<string, unknown>;
             try {
@@ -43,9 +44,11 @@ export default defineContentScript({
                 }
             } catch (err: unknown) {
                 const msg = err instanceof Error ? err.message : String(err);
+                console.error('[GzGTracker Sync] Error handling request:', msg);
                 response = {id, ok: false, error: msg};
             }
 
+            console.log('[GzGTracker Sync] Sending response:', response);
             window.dispatchEvent(
                 new CustomEvent('gzg-sync-response', {detail: response}),
             );

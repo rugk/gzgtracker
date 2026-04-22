@@ -21,24 +21,31 @@ export class WebExtSyncProvider implements SyncProvider {
     readonly configFields: Record<string, ConfigField> = {};
 
     async testConnection(_config: Record<string, string>): Promise<void> {
+        console.log('[WebExtSync] Testing connection…');
         const resp = await this.sendMessage({action: 'ping'});
         if (!resp?.ok) {
-            throw new Error(
-                (resp?.error as string) ??
-                'Extension did not respond. Is the GzGTracker Sync extension installed?',
-            );
+            const err = (resp?.error as string) ??
+                'Extension did not respond. Is the GzGTracker Sync extension installed?';
+            console.error('[WebExtSync] Connection test failed:', err);
+            throw new Error(err);
         }
+        console.log('[WebExtSync] Connection test OK');
     }
 
     async pull<T extends SyncableRecord>(
         storeName: string,
         _config: Record<string, string>,
     ): Promise<T[]> {
+        console.log(`[WebExtSync] Pulling store "${storeName}"…`);
         const resp = await this.sendMessage({action: 'pull', storeName});
         if (!resp?.ok) {
-            throw new Error((resp?.error as string) ?? 'Pull failed');
+            const err = (resp?.error as string) ?? 'Pull failed';
+            console.error(`[WebExtSync] Pull failed for "${storeName}":`, err);
+            throw new Error(err);
         }
-        return (resp.items ?? []) as T[];
+        const items = (resp.items ?? []) as T[];
+        console.log(`[WebExtSync] Pulled ${items.length} item(s) from "${storeName}"`);
+        return items;
     }
 
     async push<T extends SyncableRecord>(
@@ -46,10 +53,14 @@ export class WebExtSyncProvider implements SyncProvider {
         items: T[],
         _config: Record<string, string>,
     ): Promise<void> {
+        console.log(`[WebExtSync] Pushing ${items.length} item(s) to "${storeName}"…`);
         const resp = await this.sendMessage({action: 'push', storeName, items});
         if (!resp?.ok) {
-            throw new Error((resp?.error as string) ?? 'Push failed');
+            const err = (resp?.error as string) ?? 'Push failed';
+            console.error(`[WebExtSync] Push failed for "${storeName}":`, err);
+            throw new Error(err);
         }
+        console.log(`[WebExtSync] Push to "${storeName}" OK`);
     }
 
     /**
@@ -78,10 +89,12 @@ export class WebExtSyncProvider implements SyncProvider {
                 if (detail?.id !== id) return;
                 clearTimeout(timer);
                 window.removeEventListener('gzg-sync-response', handler);
+                console.log('[WebExtSync] Response received:', detail);
                 resolve(detail);
             };
 
             window.addEventListener('gzg-sync-response', handler);
+            console.log('[WebExtSync] Sending request:', {...payload, id});
             window.dispatchEvent(
                 new CustomEvent('gzg-sync-request', {detail: {...payload, id}}),
             );

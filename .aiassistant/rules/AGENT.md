@@ -46,11 +46,14 @@ Functional requirements:
 - [Vue I18n](https://vue-i18n.intlify.dev/) (i18n/l10n)
 
 **UI:**
-
 - Pico CSS
 
 **Storage:**
 - LocalForage (offline-first local storage)
+
+**Logging:**
+
+- Use the browser console for logging
 
 **PWA:**
 - Vite PWA plugin + Workbox
