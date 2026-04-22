@@ -89,6 +89,38 @@ class SyncService {
             await provider.push(storeName, toPush, config);
         }
     }
+
+    /**
+     * Export all local data across all stores as a single JSON object.
+     */
+    async exportAllToJson(): Promise<string> {
+        const result: Record<string, SyncableRecord[]> = {};
+        for (const storeName of STORE_NAMES) {
+            const localStore = localforage.createInstance({name: storeName});
+            const items: SyncableRecord[] = [];
+            await localStore.iterate<SyncableRecord, void>((value) => {
+                items.push(value);
+            });
+            result[storeName] = items;
+        }
+        return JSON.stringify(result, null, 2);
+    }
+
+    /**
+     * Import data from a JSON object, overwriting local stores.
+     */
+    async importFromJson(json: string): Promise<void> {
+        const data = JSON.parse(json) as Record<string, SyncableRecord[]>;
+        for (const storeName of STORE_NAMES) {
+            if (data[storeName]) {
+                const localStore = localforage.createInstance({name: storeName});
+                await localStore.clear();
+                for (const item of data[storeName]) {
+                    await localStore.setItem(item.id, item);
+                }
+            }
+        }
+    }
 }
 
 export const syncService = new SyncService();

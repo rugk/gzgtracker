@@ -16,6 +16,7 @@ const selectedProvider = ref<SyncProvider | undefined>();
 const configValues = ref<Record<string, string>>({});
 const syncStatus = ref('');
 const syncing = ref(false);
+const debugJson = ref('');
 
 watch(selectedProviderKey, (key) => {
   selectedProvider.value = syncRegistry.get(key);
@@ -83,6 +84,30 @@ async function runSync() {
     syncing.value = false;
   }
 }
+
+async function exportJson() {
+  debugJson.value = await syncService.exportAllToJson();
+}
+
+async function importJson() {
+  if (!debugJson.value.trim()) return;
+  try {
+    await syncService.importFromJson(debugJson.value);
+    syncStatus.value = t('sync.importSuccess');
+  } catch (e: unknown) {
+    syncStatus.value = t('sync.importError') + (e instanceof Error ? e.message : String(e));
+  }
+}
+
+function handleFileUpload(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    debugJson.value = e.target?.result as string;
+  };
+  reader.readAsText(file);
+}
 </script>
 
 <template>
@@ -126,5 +151,22 @@ async function runSync() {
     </template>
 
     <p v-if="syncStatus" style="margin-top: 0.5rem;">{{ syncStatus }}</p>
+  </article>
+
+  <article>
+    <h2>{{ t('sync.manual') }}</h2>
+    <textarea
+        v-model="debugJson"
+        rows="10"
+        placeholder='{"gzg-people": [], ...}'
+        style="font-family: monospace; font-size: 0.8rem;"
+    ></textarea>
+
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+      <button @click="exportJson">{{ t('sync.export') }}</button>
+      <button class="secondary" @click="importJson">{{ t('sync.import') }}</button>
+      <input type="file" accept=".json" @change="handleFileUpload"
+             style="font-size: 0.8rem; border: none; padding: 0;"/>
+    </div>
   </article>
 </template>

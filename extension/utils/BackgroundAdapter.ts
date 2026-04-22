@@ -1,4 +1,5 @@
 import type {Adapter, Message, OnMessage, SendMessage} from 'comctx';
+import {browser} from "wxt/browser";
 
 export interface MessageMeta {
     tabId: number;

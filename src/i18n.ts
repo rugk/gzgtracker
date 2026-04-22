@@ -36,6 +36,11 @@ const messages = {
       error: 'Sync failed',
       saved: 'Sync settings saved ✓',
       cleared: 'Sync disabled ✓',
+      manual: 'Manual Import/Export (Debug)',
+      export: 'Export to JSON',
+      import: 'Import from JSON',
+      importSuccess: 'Data imported successfully ✓',
+      importError: 'Import failed: ',
     },
   },
   de: {
@@ -73,6 +78,11 @@ const messages = {
       error: 'Synchronisation fehlgeschlagen',
       saved: 'Sync-Einstellungen gespeichert ✓',
       cleared: 'Synchronisation deaktiviert ✓',
+      manual: 'Manueller Import/Export (Debug)',
+      export: 'Als JSON exportieren',
+      import: 'Von JSON importieren',
+      importSuccess: 'Daten erfolgreich importiert ✓',
+      importError: 'Import fehlgeschlagen: ',
     },
   },
 };

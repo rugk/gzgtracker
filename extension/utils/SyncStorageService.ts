@@ -28,6 +28,17 @@ export class SyncStorageService {
     async push(storeName: string, items: unknown[]): Promise<void> {
         await browser.storage.sync.set({[storeName]: JSON.stringify(items)});
     }
+
+    async exportAll(): Promise<string> {
+        const all = await browser.storage.sync.get(null);
+        return JSON.stringify(all, null, 2);
+    }
+
+    async importAll(json: string): Promise<void> {
+        const data = JSON.parse(json);
+        await browser.storage.sync.clear();
+        await browser.storage.sync.set(data);
+    }
 }
 
 export const [provideSyncStorage, injectSyncStorage] = defineProxy(
