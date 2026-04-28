@@ -7,5 +7,5 @@ function openFullTab() {
 </script>
 
 <template>
-  <app @open-full-tab="openFullTab"></app>
+  <app :isBrowserExtension="true" @open-full-tab="openFullTab"></app>
 </template>

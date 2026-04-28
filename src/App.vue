@@ -1,7 +1,16 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
 import {useI18n} from 'vue-i18n';
+import {findOutIfRunningInExtensionContext} from "./browser-helper";
 
+const props = defineProps({
+  isBrowserExtension: {
+    type: [Boolean, null],
+    required: false,
+    default() {
+      return findOutIfRunningInExtensionContext();
+    }
+  }
+})
 const emits = defineEmits(['openFullTab'])
 const { t } = useI18n();
 
@@ -18,20 +27,6 @@ const navItems = [
   { to: '/ibans', key: 'nav.ibans' },
   { to: '/settings', key: 'nav.settings' },
 ];
-
-const isExtensionPopup = ref(false);
-
-onMounted(() => {
-  const g = globalThis as any;
-  const browser = g.browser || g.chrome;
-  // If we have browser APIs and we are in the popup (determined by window width or extension-specific markers)
-  // WXT doesn't provide a direct "isPopup" but usually popups are small.
-  // A better way is checking the URL or if we are in a tab.
-  if (browser && browser.tabs && browser.runtime) {
-    // Basic check: if we are in a context that can create tabs but isn't a full tab itself yet (simplified)
-    isExtensionPopup.value = true;
-  }
-});
 
 function openFullTab() {
   emits('openFullTab');
@@ -51,7 +46,7 @@ function openFullTab() {
         <li v-for="item in navItems" :key="item.to">
           <a :href="'#' + item.to">{{ t(item.key) }}</a>
         </li>
-        <li v-if="isExtensionPopup">
+        <li v-if="props.isBrowserExtension">
           <button class="outline" @click="openFullTab"
                   style="padding: 0.25rem 0.5rem; font-size: 0.8rem; margin-left: 0.5rem;">
             {{ t('nav.openFullTab') || 'Full Tab' }}
@@ -80,7 +75,7 @@ function openFullTab() {
             <li v-for="item in navItems" :key="item.to">
               <a :href="'#' + item.to" @click="closeNav">{{ t(item.key) }}</a>
             </li>
-            <li v-if="isExtensionPopup">
+            <li v-if="props.isBrowserExtension">
               <button class="outline" @click="openFullTab" style="width: 100%; margin-top: 0.5rem;">
                 {{ t('nav.openFullTab') || 'Full Tab' }}
               </button>
