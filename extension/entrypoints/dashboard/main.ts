@@ -3,9 +3,9 @@ import {createPinia} from 'pinia';
 import {router} from '../../../src/router';
 import {i18n} from '../../../src/i18n';
 import '../../../src/styles.css';
-import ExtensionApp from "@/components/ExtensionApp.vue";
+import ExtensionDashboard from "@/entrypoints/dashboard/ExtensionDashboard.vue";
 
-const app = createApp(ExtensionApp);
+const app = createApp(ExtensionDashboard);
 app.use(createPinia());
 app.use(router);
 app.use(i18n);

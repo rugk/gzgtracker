@@ -9,6 +9,11 @@ const props = defineProps({
     default() {
       return findOutIfRunningInExtensionContext();
     }
+  },
+  isBrowserPopup: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 const emits = defineEmits(['openFullTab'])
@@ -46,7 +51,7 @@ function openFullTab() {
         <li v-for="item in navItems" :key="item.to">
           <a :href="'#' + item.to">{{ t(item.key) }}</a>
         </li>
-        <li v-if="props.isBrowserExtension">
+        <li v-if="props.isBrowserExtension && props.isBrowserPopup">
           <button class="outline" @click="openFullTab"
                   style="padding: 0.25rem 0.5rem; font-size: 0.8rem; margin-left: 0.5rem;">
             {{ t('nav.openFullTab') || 'Full Tab' }}
