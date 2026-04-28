@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue';
 import {useI18n} from 'vue-i18n';
 
+const emits = defineEmits(['openFullTab'])
 const { t } = useI18n();
 
 function closeNav() {
@@ -22,22 +23,18 @@ const isExtensionPopup = ref(false);
 
 onMounted(() => {
   const g = globalThis as any;
-  const b = g.browser || g.chrome;
+  const browser = g.browser || g.chrome;
   // If we have browser APIs and we are in the popup (determined by window width or extension-specific markers)
   // WXT doesn't provide a direct "isPopup" but usually popups are small.
   // A better way is checking the URL or if we are in a tab.
-  if (b && b.tabs && b.runtime) {
+  if (browser && browser.tabs && browser.runtime) {
     // Basic check: if we are in a context that can create tabs but isn't a full tab itself yet (simplified)
     isExtensionPopup.value = true;
   }
 });
 
 function openFullTab() {
-  const g = globalThis as any;
-  const b = g.browser || g.chrome;
-  if (b && b.tabs) {
-    b.tabs.create({url: b.runtime.getURL('dashboard.html')});
-  }
+  emits('openFullTab');
 }
 </script>
 
